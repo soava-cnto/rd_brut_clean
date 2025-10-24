@@ -1,0 +1,9 @@
+# Postgres
+DATABASE_URL=postgresql://user:password@localhost:5432/mydb
+
+# Dossiers
+BRUT_DIR=/path/to/brut
+CLEAN_DIR=/path/to/clean
+
+# Optionnel
+LOG_LEVEL=INFO
