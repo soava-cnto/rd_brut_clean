@@ -9,7 +9,7 @@ Base = declarative_base()
 
 class RDRecord(Base):
     __tablename__ = "rd_clean"
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id_rd = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     file_date = Column(Date, nullable=False)          # Date au format SQL date
     agent = Column(String, nullable=True)             # Agent (string pour robustesse)
     statut = Column(String, nullable=False)
