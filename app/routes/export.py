@@ -1,13 +1,19 @@
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 from fastapi import APIRouter, Query
 import pandas as pd
 from app.database import Database
 
+load_dotenv()
+
 router = APIRouter(prefix="/export", tags=["Export"])
+
+exported_dir = os.getenv("EXPORT_DIR")
 
 @router.get("/all")
 def export_view(
-    export_path: str = Query("./exports", description="Chemin du dossier de destination"),
+    export_path: str = Query(exported_dir, description="Chemin du dossier de destination"),
     filename: str = Query("rd_all_data.csv", description="Nom du fichier exporté")
 ):
     """

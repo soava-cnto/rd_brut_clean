@@ -4,16 +4,15 @@ from app.services.cleaner import Cleaner
 from app.services.ingestor import FileIngestor
 from app.database import db
 from app import crud
+from dotenv import load_dotenv
+import os
+    
+load_dotenv()
 
 router = APIRouter(prefix="/files", tags=["files"])
 
 @router.post("/process-brut")
 def process_brut():
-    brut_dir = db.engine.url.query.get("BRUT_DIR") if False else None
-    # preferer charger depuis env (passer en paramètre si souhaité)
-    from dotenv import load_dotenv
-    import os
-    load_dotenv()
     brut_dir = os.getenv("BRUT_DIR")
     clean_dir = os.getenv("CLEAN_DIR")
     if not brut_dir or not clean_dir:
@@ -24,9 +23,6 @@ def process_brut():
 
 @router.post("/ingest-clean")
 def ingest_clean():
-    from dotenv import load_dotenv
-    import os
-    load_dotenv()
     clean_dir = os.getenv("CLEAN_DIR")
     if not clean_dir:
         return {"error": "CLEAN_DIR not set in .env"}

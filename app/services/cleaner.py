@@ -16,12 +16,9 @@ class Cleaner:
 
     def _process_file(self, path):
         df = pd.read_excel(path, sheet_name=0, header=None)
-        file_title = df.iloc[1, 9] if len(df.columns) > 9 else ""
-        file_date = df.iloc[3, 0].split(' ')[1] if " " in str(df.iloc[3, 0]) else None
-        name = "RD" if file_title == "Agents report" else "EA"
-        file_date_clean = file_date.replace("/", "-") if file_date else "unknown"
-        final_file_name = f"{name}_{file_date_clean}.csv"
-        final_path = os.path.join(self.clean_dir, final_file_name)
+
+        get_file_name = f"{os.path.basename(path).split('.')[0]}.csv"
+        final_path = os.path.join(self.clean_dir, get_file_name)
 
         lignes = []
         date_nettoyee = ""
@@ -79,7 +76,7 @@ class Cleaner:
         return None, 0
 
     def process_all(self):
-        files = [f for f in os.listdir(self.brut_dir) if f.endswith(('.xls', '.xlsx', '.xlsm'))]
+        files = [f for f in os.listdir(self.brut_dir) if f.endswith(('.xls'))]
         results = []
         for f in files:
             path = os.path.join(self.brut_dir, f)
