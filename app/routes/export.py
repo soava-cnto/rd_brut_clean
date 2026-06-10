@@ -22,7 +22,7 @@ def export_view(
     """
 
     db = Database()
-    query = "SELECT * FROM v_rd"
+    query = "SELECT * FROM rd.v_rd"
     df = pd.read_sql(query, db.engine)
 
     # 📁 Créer le dossier de destination si nécessaire

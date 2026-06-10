@@ -1,11 +1,25 @@
 # app/models.py
 import uuid
 from datetime import datetime
-from sqlalchemy import Column, String, Integer, Float, Date, TIMESTAMP
+from sqlalchemy import Column, MetaData, String, Integer, Float, Date, TIMESTAMP, event, DDL
 from sqlalchemy.dialects.postgresql import UUID, INTERVAL
 from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
+# 1. Définir le nom de votre schéma personnalisé
+NOM_SCHEMA = "rd"
+
+# 2. Associer le schéma aux métadonnées
+metadata = MetaData(schema=NOM_SCHEMA)
+
+# 3. Événement pour créer le schéma automatiquement s'il n'existe pas
+event.listen(
+    metadata,
+    "before_create",
+    DDL(f"CREATE SCHEMA IF NOT EXISTS {NOM_SCHEMA};")
+)
+
+# 4. Base déclarative unique avec nos métadonnées configurées
+Base = declarative_base(metadata=metadata)
 
 class RDRecord(Base):
     __tablename__ = "rd_clean"
